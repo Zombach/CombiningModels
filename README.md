@@ -1,7 +1,12 @@
 # Combining-Models
 
-Через Mapperly возможно https://mapperly.riok.app/docs/configuration/existing-target/
-Automaper примерно такой же способ.
+кодогенерация. 
+https://learn.microsoft.com/ru-ru/dotnet/csharp/roslyn-sdk/source-generators-overview
+так же я делал проект, типа своего компилятора с генерации и анализом кода. потом ссыль скину.
+
+
+Через Mapperly в теории возможно https://mapperly.riok.app/docs/configuration/existing-target/
+Automaper примерно такой же способ, но можно найти реализацию
 
 Отрожение примеры
 НЕПРОВЕРЕННЫЙ, но использующий Reflection.Emit API, что-то вроде этого должно сработать:
