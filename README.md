@@ -1,4 +1,5 @@
 # Combining-Models
+Предлагаю сделать, что-то типа Join'ов у базы. Ну типа Left то оснавная модель первая и так далее.
 
 кодогенерация. 
 https://learn.microsoft.com/ru-ru/dotnet/csharp/roslyn-sdk/source-generators-overview
