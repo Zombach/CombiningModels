@@ -10,9 +10,4 @@
   <ItemGroup>
     <PackageReference Include="BenchmarkDotNet" Version="0.13.12" />
   </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\CombiningModels\CombiningModels.csproj" />
-  </ItemGroup>
-
 </Project>
