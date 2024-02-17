@@ -1,14 +1,26 @@
 # Combining-Models
-Предлагаю сделать, что-то типа Join'ов у базы. Ну типа Left то оснавная модель первая и так далее.
+Объединение двух моделей по имени полей и их типам.
+Самый быстрый способ на данный момент, это руками пройтись по модели.
+Но для каждого свойства необходимо писать кучу кода руками.
+Самая главная проблема в том, что если модель сменится, то код придется переписывать, либо редактить. 
+Есть предложение использхую кодокенерацию, реализовать через аттрибуты возможности, слияния двух моделий в одну.
+Атрибуты будут из разряда джойнов для sql.
+[LeftMerge] - левая модель берется за основу, и в неё вливаются данные из правой модели, но не заменяются те данные которые уже имеются.
+[RightMerge] - правая модель берется за основу, и в неё вливаются данные из левой модели, но не заменяются те данные которые уже имеются.
+[Merge] - Делается слияние двух моделуй. Из правой в левую, заменяю данные если они имеются.
+Код должен генерироваться, на подобии метода "руками"
 
+Вот информация по генерацици кода.
 # Кодогенерация. 
 https://learn.microsoft.com/ru-ru/dotnet/csharp/roslyn-sdk/source-generators-overview
 так же я делал проект, типа своего компилятора с генерации и анализом кода. потом ссыль скину.
 https://github.com/Zombach/Compiler
 
+Можно посмотреть тут. Сам маппер реализован через кодогенерацию.
 Через Mapperly в теории возможно https://mapperly.riok.app/docs/configuration/existing-target/
 Automaper примерно такой же способ, но нужно найти реализацию
 
+Немного жути. но будет работать, трабл в том, что рефлексия заведомо тяжелая.
 # Отражение примеры
 НЕПРОВЕРЕННЫЙ, но использующий Reflection.Emit API, что-то вроде этого должно сработать:
 ```cs
@@ -30,8 +42,6 @@ public Type MergeTypes(params Type[] types)
     }
 
     return typeBuilder.CreateType();
-
-
 }
 
 private Dictionary<string, Type> GetProperties(Type type)
@@ -40,7 +50,7 @@ private Dictionary<string, Type> GetProperties(Type type)
 }
 ```
 
-## ИСПОЛЬЗОВАНИЕ:
+### ИСПОЛЬЗОВАНИЕ:
 ```cs
 Type combinedType = MergeTypes(typeof(Foo), typeof(Bar));
 ```
@@ -80,13 +90,14 @@ public static void UpdateResponseData(this ResponseData source, ResponseData res
 # Ожиданеи
 ```cs
 [Merge]
-public class ResponseData
+public partial class DataMerge
 {
-    ///
+    [LeftMerge]
+    public partial ResponseData LeftMerge(ResponseData right);
 }
 ```
-## Вызов
+### Вызов
 ```cs
 var responseData = new ResponseData();
-responseData.LoadResource(resource)
+responseData.LeftMerge(resource)
 ```
